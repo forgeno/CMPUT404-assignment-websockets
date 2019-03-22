@@ -43,7 +43,8 @@ function debug(str) {
 debug("Test");
 
 world = {};
-
+colours = ["red", "blue", "yellow", "green", "purple"]
+var counter = 0;
 //XXX: TODO Make this prettier!
 function drawCircle(context,entity) {
     with(context) {
@@ -83,7 +84,21 @@ function renderFrame() {
     clearFrame();
     for (var key in world) {
         var entity = world[key];
-        drawCircle(context,prepEntity(entity));
+        drawRectangle(context,prepEntity(entity));
+    }
+}
+
+function drawRectangle(context,entity) {
+    with(context) {
+        beginPath();              
+        lineWidth = 3;
+        var x = entity["x"];
+        var y = entity["y"];
+        //moveTo(x,y);
+        fillStyle = entity["colour"];
+        strokeStyle = fillStyle;
+        fillRect(x,y,20,20)
+        stroke();                                
     }
 }
 
@@ -244,7 +259,7 @@ mouse.mouseuppers.push(function(x,y,clicked,e) {
 });
 
 mouse.mousedraggers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'green',
+    addEntityWithoutName({'x':x,'y':y,'colour': colours[counter%5],
                           'radius':10});
 });
 
